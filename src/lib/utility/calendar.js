@@ -275,11 +275,29 @@ export function getGroupedItems(items, groupOrders) {
 }
 
 export function getVisibleItems(items, canvasTimeStart, canvasTimeEnd, keys, isSelectedItem) {
-  // const { itemTimeStartKey, itemTimeEndKey } = keys
+  const { itemTimeStartKey, itemTimeEndKey } = keys
 
-  // const hasFunctionToVerify = !!isSelectedItem
+  const hasFunctionToVerify = !!isSelectedItem
 
-  return []
+  console.log(items.filter(item => {
+    return (
+      hasFunctionToVerify && isSelectedItem(item) || 
+      (
+        _get(item, itemTimeStartKey) <= canvasTimeEnd &&
+        _get(item, itemTimeEndKey) >= canvasTimeStart
+      )
+    )
+  }))
+
+  return items.filter(item => {
+    return (
+      hasFunctionToVerify && isSelectedItem(item) || 
+      (
+        _get(item, itemTimeStartKey) <= canvasTimeEnd &&
+        _get(item, itemTimeEndKey) >= canvasTimeStart
+      )
+    )
+  })
 }
 
 const EPSILON = 0.001
